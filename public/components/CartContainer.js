@@ -26,30 +26,6 @@ class CartContainer extends Component{
     this.setState({cartClean:cleanCart})
   }
 
-
-  //  CardItems(){
-  //   // setTimeout(() => { console.log(this.state.cartClean) }, 4)
-  //   return(
-  //     cart.map(item => {
-  //       console.log(item)
-  //     })
-  //   //   <div className="cart-container-items">
-  //   //       <section>
-  //   //       <div>{item.title}</div>
-  //   //       <div>{item.price}</div>
-  //   //       </section>
-  //   //   </div>
-  //   )
-  // }
-
-  showTotal(){
-    console.log(this.state.cartClean);
-    // this.state.cartClean.reduce((acc,item) => {
-    //   console.log(item)
-    // },0)
-  }
-
-
   CartContent(){
     if(!this.state.showHistory){
       return(
@@ -68,7 +44,7 @@ class CartContainer extends Component{
         <div className="open-cart-history">
           <h3>Cart</h3>
           <div>items:</div>
-          <CardItems cart={this.state.cartClean}/>
+          <CardItems cart={this.state.cartClean} totalItems={this.props.cartItems}/>
         </div>
       </div>
      )
@@ -81,9 +57,6 @@ class CartContainer extends Component{
   )
  }
 }
-// <div className="cart-container">
-// <button onClick={(e)=>{this.sumItems(e)}}>+</button>
-// <div className="menu-title">Cart</div>
-// </div>
+
 
 export default CartContainer

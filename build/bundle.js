@@ -26067,30 +26067,6 @@ var CartContainer = function (_Component) {
       }, []);
       this.setState({ cartClean: cleanCart });
     }
-
-    //  CardItems(){
-    //   // setTimeout(() => { console.log(this.state.cartClean) }, 4)
-    //   return(
-    //     cart.map(item => {
-    //       console.log(item)
-    //     })
-    //   //   <div className="cart-container-items">
-    //   //       <section>
-    //   //       <div>{item.title}</div>
-    //   //       <div>{item.price}</div>
-    //   //       </section>
-    //   //   </div>
-    //   )
-    // }
-
-  }, {
-    key: 'showTotal',
-    value: function showTotal() {
-      console.log(this.state.cartClean);
-      // this.state.cartClean.reduce((acc,item) => {
-      //   console.log(item)
-      // },0)
-    }
   }, {
     key: 'CartContent',
     value: function CartContent() {
@@ -26146,7 +26122,7 @@ var CartContainer = function (_Component) {
               null,
               'items:'
             ),
-            _react2.default.createElement(_CartItems2.default, { cart: this.state.cartClean })
+            _react2.default.createElement(_CartItems2.default, { cart: this.state.cartClean, totalItems: this.props.cartItems })
           )
         );
       }
@@ -26160,10 +26136,6 @@ var CartContainer = function (_Component) {
 
   return CartContainer;
 }(_react.Component);
-// <div className="cart-container">
-// <button onClick={(e)=>{this.sumItems(e)}}>+</button>
-// <div className="menu-title">Cart</div>
-// </div>
 
 exports.default = CartContainer;
 
@@ -26185,14 +26157,15 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var CartItems = function CartItems(_ref) {
-  var cart = _ref.cart;
+  var cart = _ref.cart,
+      totalItems = _ref.totalItems;
 
 
   var showCart = function showCart() {
-    return cart.map(function (item) {
+    return cart.map(function (item, i) {
       return _react2.default.createElement(
         "div",
-        { className: "cart-item-markdown" },
+        { key: i, className: "cart-item-markdown" },
         _react2.default.createElement(
           "div",
           null,
@@ -26214,10 +26187,19 @@ var CartItems = function CartItems(_ref) {
     });
   };
 
+  var showTotal = function showTotal() {
+    var total = totalItems.reduce(function (acc, item) {
+      acc += parseFloat(item.price);
+      return acc;
+    }, 0);
+    return "total: $ " + total.toFixed(2);
+  };
+
   return _react2.default.createElement(
     "div",
     null,
-    showCart()
+    showCart(),
+    showTotal()
   );
 };
 
