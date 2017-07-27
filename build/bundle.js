@@ -25867,7 +25867,7 @@ var MainPage = function (_Component) {
       if (list) {
         this.setState({ cartList: list });
       }
-      fetch('/items').then(function (item) {
+      fetch('/api/v1/items').then(function (item) {
         return item.json();
       }).then(function (items) {
         return _this2.setState({ totalList: items });
@@ -26054,7 +26054,7 @@ var OrderHistory = function (_Component) {
       var _this2 = this;
 
       e.preventDefault();
-      fetch('/checkout').then(function (info) {
+      fetch('/api/v1/checkout').then(function (info) {
         return info.json();
       }).then(function (info) {
         return _this2.setState({ info: info });
@@ -26244,7 +26244,7 @@ var CartContainer = function (_Component) {
       this.props.clearList();
       window.localStorage.setItem("list", JSON.stringify([]));
       var total = this.findSum();
-      fetch('/checkout', {
+      fetch('/api/v1/checkout', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

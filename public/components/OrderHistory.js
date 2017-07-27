@@ -11,7 +11,7 @@ class OrderHistory extends Component{
 
   handleOpen(e){
     e.preventDefault()
-    fetch('/checkout')
+    fetch('/api/v1/checkout')
     .then(info => info.json())
     .then(info => this.setState({info:info}))
     .catch(error => console.log(error))

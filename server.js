@@ -14,7 +14,7 @@ app.get('/', (req,res) => {
   res.sendFile(path.join(__dirname + "/public/index.html"))
 })
 
-app.post('/checkout', (req, res) => {
+app.post('/api/v1/checkout', (req, res) => {
   const info =  req.body
   database('order-history').insert(info)
   .then(info => {res.status(201).res.json(info)})
@@ -22,13 +22,13 @@ app.post('/checkout', (req, res) => {
   })
 })
 
-app.get('/checkout', (req,res) => {
+app.get('/api/v1/checkout', (req,res) => {
   database('order-history').select()
   .then((info) => res.status(200).json(info))
   .catch(error => {res.status(500).send("error", error)})
 })
 
-app.get('/items', (req,res) => {
+app.get('/api/v1/items', (req,res) => {
   res.json(app.locals)
 })
 

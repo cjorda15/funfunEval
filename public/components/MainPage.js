@@ -17,7 +17,7 @@ class MainPage extends Component{
      if(list){
        this.setState({cartList:list})
      }
-    fetch('/items')
+    fetch('/api/v1/items')
     .then(item => item.json())
     .then((items) => this.setState({totalList:items}))
     .catch(err => console.log(err))
