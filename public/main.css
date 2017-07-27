@@ -5,6 +5,8 @@
 }
 
 body{
+  font-weight: 100;
+  font-family: sans-serif;
 }
 
 #root{
@@ -166,4 +168,51 @@ body{
 
 #cart-items-headline{
   align-self: baseline;
+}
+
+.order-history-open{
+  height: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.order-history-tab{
+  display: flex;
+  flex-direction: column;
+  border: 3px solid #000;
+}
+
+.order-history-tab button{
+  height: 70px;
+  font-size: 40px;
+  background: azure;
+  border: none;
+  border-bottom: 2px solid #000;
+  outline: none;
+}
+
+.menu-title-open{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.order-history-menu{
+  padding: 20px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  border-color: #000;
+  border-width: 5px 5px 5px 0px;
+  border-style: double;
+  width: 300px;
+}
+
+.order-history-menu h3{
+
+}
+
+.order-history-details{
+  padding: 23px;
 }

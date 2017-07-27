@@ -26,6 +26,28 @@ class CartContainer extends Component{
     this.setState({cartClean:cleanCart})
   }
 
+  findSum(){
+    let total = this.props.cartItems.reduce((acc,item) => {
+        acc+=parseFloat(item.price)
+        return acc
+      },0)
+      return total.toFixed(2)
+  }
+
+  checkout(){
+    const total =  this.findSum()
+    fetch('/checkout',{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        total
+      })
+    })
+    .then(res => res.json())
+    .catch(err => console.log(error,"ERROR"))
+  }
+
+
   CartContent(){
     if(!this.state.showHistory){
       return(
@@ -45,6 +67,7 @@ class CartContainer extends Component{
           <h3 className="cart-history-cat">Cart</h3>
           <div id="cart-items-headline" className="cart-history-cat">items:</div>
           <CardItems className="cart-history-cat" cart={this.state.cartClean} totalItems={this.props.cartItems}/>
+          <button onClick={()=>{this.checkout()}}>checkout and purchase</button>
         </div>
       </div>
      )

@@ -25978,32 +25978,152 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var OrderHistory = function OrderHistory(_ref) {
-  _objectDestructuringEmpty(_ref);
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-  return _react2.default.createElement(
-    "div",
-    { className: "order-history" },
-    _react2.default.createElement(
-      "button",
-      null,
-      "+"
-    ),
-    _react2.default.createElement(
-      "div",
-      { className: "menu-title" },
-      "Order History"
-    )
-  );
-};
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var OrderHistory = function (_Component) {
+  _inherits(OrderHistory, _Component);
+
+  function OrderHistory(props) {
+    _classCallCheck(this, OrderHistory);
+
+    var _this = _possibleConstructorReturn(this, (OrderHistory.__proto__ || Object.getPrototypeOf(OrderHistory)).call(this, props));
+
+    _this.state = {
+      open: false,
+      info: []
+    };
+    return _this;
+  }
+
+  _createClass(OrderHistory, [{
+    key: 'handleOpen',
+    value: function handleOpen(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      fetch('/checkout').then(function (info) {
+        return info.json();
+      }).then(function (info) {
+        return _this2.setState({ info: info });
+      }).catch(function (error) {
+        return console.log(error);
+      });
+      this.setState({ open: true });
+    }
+  }, {
+    key: 'handleClose',
+    value: function handleClose(e) {
+      e.preventDefault();
+      this.setState({ open: false });
+    }
+  }, {
+    key: 'orderHistoryInfo',
+    value: function orderHistoryInfo() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'order-history-info' },
+        this.state.info.map(function (item, index) {
+          return _react2.default.createElement(
+            'div',
+            { key: index, className: 'order-history-details' },
+            _react2.default.createElement(
+              'h6',
+              null,
+              'Order Number ',
+              index
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'Order Date: ',
+              item.created_at.slice(0, 10)
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'Total Price: $',
+              item.total
+            )
+          );
+        })
+      );
+    }
+  }, {
+    key: 'orderHistoryContent',
+    value: function orderHistoryContent() {
+      var _this3 = this;
+
+      if (!this.state.open) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'order-history' },
+          _react2.default.createElement(
+            'button',
+            { onClick: function onClick(e) {
+                _this3.handleOpen(e);
+              } },
+            '+'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'menu-title' },
+            'Order History'
+          )
+        );
+      } else {
+        return _react2.default.createElement(
+          'div',
+          { className: 'order-history-open' },
+          _react2.default.createElement(
+            'div',
+            { className: 'order-history-tab' },
+            _react2.default.createElement(
+              'button',
+              { onClick: function onClick(e) {
+                  _this3.handleClose(e);
+                } },
+              '-'
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'menu-title-open' },
+              'Order History'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'order-history-menu' },
+            _react2.default.createElement(
+              'h3',
+              null,
+              'Order History'
+            ),
+            this.orderHistoryInfo()
+          )
+        );
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return this.orderHistoryContent();
+    }
+  }]);
+
+  return OrderHistory;
+}(_react.Component);
 
 exports.default = OrderHistory;
 
@@ -26068,6 +26188,31 @@ var CartContainer = function (_Component) {
       this.setState({ cartClean: cleanCart });
     }
   }, {
+    key: 'findSum',
+    value: function findSum() {
+      var total = this.props.cartItems.reduce(function (acc, item) {
+        acc += parseFloat(item.price);
+        return acc;
+      }, 0);
+      return total.toFixed(2);
+    }
+  }, {
+    key: 'checkout',
+    value: function checkout() {
+      var total = this.findSum();
+      fetch('/checkout', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          total: total
+        })
+      }).then(function (res) {
+        return res.json();
+      }).catch(function (err) {
+        return console.log(error, "ERROR");
+      });
+    }
+  }, {
     key: 'CartContent',
     value: function CartContent() {
       var _this2 = this;
@@ -26122,7 +26267,14 @@ var CartContainer = function (_Component) {
               { id: 'cart-items-headline', className: 'cart-history-cat' },
               'items:'
             ),
-            _react2.default.createElement(_CartItems2.default, { className: 'cart-history-cat', cart: this.state.cartClean, totalItems: this.props.cartItems })
+            _react2.default.createElement(_CartItems2.default, { className: 'cart-history-cat', cart: this.state.cartClean, totalItems: this.props.cartItems }),
+            _react2.default.createElement(
+              'button',
+              { onClick: function onClick() {
+                  _this2.checkout();
+                } },
+              'checkout and purchase'
+            )
           )
         );
       }
