@@ -49,10 +49,13 @@ body{
   display: flex;
   align-items: center;
   height: 100%;
+  width: 100%;
+  margin: 0px auto;
 }
 
 
 .cards-holder{
+  width: 100%;
   display: flex;
   justify-content: space-around;
 }
@@ -111,6 +114,7 @@ body{
   right: 0px;
   background: #fff;
   height: 698px;
+  width: 380px;
 }
 
 .open-cart-history{
@@ -171,9 +175,12 @@ body{
 }
 
 .order-history-open{
+  position: absolute;
   height: 100%;
   display: flex;
   flex-direction: row-reverse;
+  background: #fff;
+  z-index: 1;
 }
 
 .order-history-tab{
@@ -208,6 +215,14 @@ body{
   border-style: double;
   width: 300px;
   overflow: scroll;
+}
+
+.open-cart-history button{
+  width: 100%;
+  margin-top: 60px;
+  height: 50px;
+  background: aliceblue;
+  border: 1px solid;
 }
 
 .order-history-menu h3{

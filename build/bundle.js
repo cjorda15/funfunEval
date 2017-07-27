@@ -25852,7 +25852,8 @@ var MainPage = function (_Component) {
     var _this = _possibleConstructorReturn(this, (MainPage.__proto__ || Object.getPrototypeOf(MainPage)).call(this));
 
     _this.state = {
-      cartList: []
+      cartList: [],
+      cartClean: []
     };
     return _this;
   }
@@ -25876,8 +25877,24 @@ var MainPage = function (_Component) {
       });
     }
   }, {
+    key: 'sumItems',
+    value: function sumItems(e) {
+      this.setState({ showHistory: true });
+
+      var cleanCart = this.state.totalList.reduce(function (acc, item) {
+        if (!acc[item.itemId]) {
+          acc[item.itemId] = [item];
+        } else {
+          acc[item.itemId].push(item);
+        }
+        return acc;
+      }, []);
+      this.setState({ cartClean: cleanCart });
+    }
+  }, {
     key: 'addToShoppingCard',
     value: function addToShoppingCard(input) {
+      this.sumItems();
       var storage = JSON.parse(window.localStorage.getItem("list"));
       if (storage) {
         storage.push(input);
@@ -25936,7 +25953,9 @@ var MainPage = function (_Component) {
             { className: 'cards-container' },
             this.createCards()
           ),
-          _react2.default.createElement(_CartContainer2.default, { clearList: this.clearList.bind(this), cartItems: this.state.cartList })
+          _react2.default.createElement(_CartContainer2.default, { clearList: this.clearList.bind(this),
+            cleanList: this.state.cartClean,
+            cartItems: this.state.cartList })
         )
       );
     }

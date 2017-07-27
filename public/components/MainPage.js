@@ -8,6 +8,7 @@ class MainPage extends Component{
     super()
     this.state = {
       cartList:[],
+      cartClean:[]
     }
   }
 
@@ -23,7 +24,22 @@ class MainPage extends Component{
     .catch(err => console.log(err))
   }
 
+  sumItems(e){
+    this.setState({showHistory:true})
+
+    let cleanCart = this.state.totalList.reduce((acc, item) => {
+      if(!acc[item.itemId]){
+        acc[item.itemId] = [item]
+      }else{
+        acc[item.itemId].push(item)
+      }
+      return acc
+    },[])
+    this.setState({cartClean:cleanCart})
+  }
+
   addToShoppingCard(input){
+     this.sumItems()
      const storage =  JSON.parse(window.localStorage.getItem("list"))
       if(storage){
         storage.push(input)
@@ -63,7 +79,9 @@ class MainPage extends Component{
         <main className="main-page-container">
           <OrderHistory/>
           <div className="cards-container">{this.createCards()}</div>
-          <CartContainer clearList={this.clearList.bind(this)} cartItems={this.state.cartList}/>
+          <CartContainer clearList={this.clearList.bind(this)}
+           cleanList = {this.state.cartClean}
+           cartItems={this.state.cartList}/>
         </main>
       </div>
     )
