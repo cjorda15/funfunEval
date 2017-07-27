@@ -1,11 +1,10 @@
 {
   "name": "juke",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "killall -9 node && node server.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -20,11 +19,16 @@
     "history": "^4.6.3",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-redux": "^5.0.5",
-    "react-router-dom": "^4.1.1",
-    "react-router-redux": "^4.0.8",
-    "redux": "^3.7.1",
-    "redux-promise": "^0.5.3",
     "webpack": "^3.0.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cjorda15/quick-challenge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cjorda15/quick-challenge/issues"
+  },
+  "homepage": "https://github.com/cjorda15/quick-challenge#readme",
+  "description": ""
 }

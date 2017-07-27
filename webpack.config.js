@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = {
-  entry: [path.join(__dirname,'public/index.js')]
+  entry: './public/index.js'
   ,
   output:{
     path:path.join(__dirname,'build'),
@@ -18,5 +18,6 @@ module.exports = {
       exclude:/node_modules/
    }
     ]
-  }
+  },
+
 }

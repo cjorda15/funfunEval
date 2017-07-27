@@ -11,9 +11,4 @@ app.use('/assets', express.static(__dirname + "/public"))
 
 app.use('/build', express.static(__dirname+'/build'))
 
-app.get('/apidata',(req,res) => {
-  res.json({"id":55})
-})
-
-
 app.listen(process.env.PORT || 3000)
