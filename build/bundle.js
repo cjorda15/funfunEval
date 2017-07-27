@@ -26114,15 +26114,15 @@ var CartContainer = function (_Component) {
             { className: 'open-cart-history' },
             _react2.default.createElement(
               'h3',
-              null,
+              { className: 'cart-history-cat' },
               'Cart'
             ),
             _react2.default.createElement(
               'div',
-              null,
+              { id: 'cart-items-headline', className: 'cart-history-cat' },
               'items:'
             ),
-            _react2.default.createElement(_CartItems2.default, { cart: this.state.cartClean, totalItems: this.props.cartItems })
+            _react2.default.createElement(_CartItems2.default, { className: 'cart-history-cat', cart: this.state.cartClean, totalItems: this.props.cartItems })
           )
         );
       }
@@ -26197,7 +26197,7 @@ var CartItems = function CartItems(_ref) {
 
   return _react2.default.createElement(
     "div",
-    null,
+    { className: "cart-items-holder" },
     showCart(),
     showTotal()
   );

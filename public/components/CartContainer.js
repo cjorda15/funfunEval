@@ -42,9 +42,9 @@ class CartContainer extends Component{
           <div className="open-menu-title">Cart</div>
         </div>
         <div className="open-cart-history">
-          <h3>Cart</h3>
-          <div>items:</div>
-          <CardItems cart={this.state.cartClean} totalItems={this.props.cartItems}/>
+          <h3 className="cart-history-cat">Cart</h3>
+          <div id="cart-items-headline" className="cart-history-cat">items:</div>
+          <CardItems className="cart-history-cat" cart={this.state.cartClean} totalItems={this.props.cartItems}/>
         </div>
       </div>
      )

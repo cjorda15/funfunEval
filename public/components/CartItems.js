@@ -24,7 +24,7 @@ const CartItems = ({cart,totalItems}) => {
 
 
   return(
-    <div>
+    <div className="cart-items-holder">
       {showCart()}
       {showTotal()}
     </div>
