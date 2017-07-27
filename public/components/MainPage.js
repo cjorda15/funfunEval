@@ -11,21 +11,50 @@ class MainPage extends Component{
     }
   }
 
+  componentWillMount(){
+     const list = JSON.parse(window.localStorage.getItem('list'))
+     console.log(list,"LIST")
+     if(list){
+       this.setState({cartList:list})
+     }
+    fetch('/items')
+    .then(item => item.json())
+    .then((items) => this.setState({totalList:items}))
+    .catch(err => console.log(err))
+  }
+
   addToShoppingCard(input){
+     const storage =  JSON.parse(window.localStorage.getItem("list"))
+      if(storage){
+        storage.push(input)
+        window.localStorage.setItem("list",JSON.stringify(storage))
+      }else{
+        window.localStorage.setItem("list",JSON.stringify([input]))
+      }
+
     let list = this.state.cartList.slice(0,this.state.cartList.length)
     list.push(input)
     this.setState({cartList:list})
   }
 
+  clearList(){
+    this.setState({cartList:[]})
+  }
+
   createCards(){
+    if(!this.state.totalList){
+      return <div>loading</div>
+    }else{
     return(
       <section className="cards-holder">
-        <Card info={{itemId:0, price:"5.00",descrition:"its simply amazing",title:"wonderful thingie ma jig"}} addItem={this.addToShoppingCard.bind(this)}/>
-        <Card info={{itemId:1, price:"3.50",descrition:"for your inner Lockness monster",title:"its a sp joke"}} addItem={this.addToShoppingCard.bind(this)}/>
-        <Card info={{itemId:2,price:"9.99",descrition:"its the number that goes round",title:"life's grand, lets make it grander"}} addItem={this.addToShoppingCard.bind(this)}/>
+        {this.state.totalList.map((item,i) => {
+          return <Card key={i} info={item} addItem={this.addToShoppingCard.bind(this)}/>
+        })
+      }
       </section>
     )
   }
+}
 
   render(){
     return(
@@ -34,7 +63,7 @@ class MainPage extends Component{
         <main className="main-page-container">
           <OrderHistory/>
           <div className="cards-container">{this.createCards()}</div>
-          <CartContainer cartItems={this.state.cartList}/>
+          <CartContainer clearList={this.clearList.bind(this)} cartItems={this.state.cartList}/>
         </main>
       </div>
     )

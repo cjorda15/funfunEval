@@ -35,6 +35,9 @@ class CartContainer extends Component{
   }
 
   checkout(){
+    this.setState({cartClean:[]})
+    this.props.clearList()
+    window.localStorage.setItem("list",JSON.stringify([]))
     const total =  this.findSum()
     fetch('/checkout',{
       method:"POST",

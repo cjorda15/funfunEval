@@ -29,7 +29,7 @@ app.get('/checkout', (req,res) => {
 })
 
 app.get('/items', (req,res) => {
-  res.status(200).res.send(app.locals)
+  res.json(app.locals)
 })
 
 app.use('/assets', express.static(__dirname + "/public"))

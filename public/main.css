@@ -207,6 +207,7 @@ body{
   border-width: 5px 5px 5px 0px;
   border-style: double;
   width: 300px;
+  overflow: scroll;
 }
 
 .order-history-menu h3{

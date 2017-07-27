@@ -25858,22 +25858,63 @@ var MainPage = function (_Component) {
   }
 
   _createClass(MainPage, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      var _this2 = this;
+
+      var list = JSON.parse(window.localStorage.getItem('list'));
+      console.log(list, "LIST");
+      if (list) {
+        this.setState({ cartList: list });
+      }
+      fetch('/items').then(function (item) {
+        return item.json();
+      }).then(function (items) {
+        return _this2.setState({ totalList: items });
+      }).catch(function (err) {
+        return console.log(err);
+      });
+    }
+  }, {
     key: 'addToShoppingCard',
     value: function addToShoppingCard(input) {
+      var storage = JSON.parse(window.localStorage.getItem("list"));
+      if (storage) {
+        storage.push(input);
+        window.localStorage.setItem("list", JSON.stringify(storage));
+      } else {
+        window.localStorage.setItem("list", JSON.stringify([input]));
+      }
+
       var list = this.state.cartList.slice(0, this.state.cartList.length);
       list.push(input);
       this.setState({ cartList: list });
     }
   }, {
+    key: 'clearList',
+    value: function clearList() {
+      this.setState({ cartList: [] });
+    }
+  }, {
     key: 'createCards',
     value: function createCards() {
-      return _react2.default.createElement(
-        'section',
-        { className: 'cards-holder' },
-        _react2.default.createElement(_Card2.default, { info: { itemId: 0, price: "5.00", descrition: "its simply amazing", title: "wonderful thingie ma jig" }, addItem: this.addToShoppingCard.bind(this) }),
-        _react2.default.createElement(_Card2.default, { info: { itemId: 1, price: "3.50", descrition: "for your inner Lockness monster", title: "its a sp joke" }, addItem: this.addToShoppingCard.bind(this) }),
-        _react2.default.createElement(_Card2.default, { info: { itemId: 2, price: "9.99", descrition: "its the number that goes round", title: "life's grand, lets make it grander" }, addItem: this.addToShoppingCard.bind(this) })
-      );
+      var _this3 = this;
+
+      if (!this.state.totalList) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          'loading'
+        );
+      } else {
+        return _react2.default.createElement(
+          'section',
+          { className: 'cards-holder' },
+          this.state.totalList.map(function (item, i) {
+            return _react2.default.createElement(_Card2.default, { key: i, info: item, addItem: _this3.addToShoppingCard.bind(_this3) });
+          })
+        );
+      }
     }
   }, {
     key: 'render',
@@ -25895,7 +25936,7 @@ var MainPage = function (_Component) {
             { className: 'cards-container' },
             this.createCards()
           ),
-          _react2.default.createElement(_CartContainer2.default, { cartItems: this.state.cartList })
+          _react2.default.createElement(_CartContainer2.default, { clearList: this.clearList.bind(this), cartItems: this.state.cartList })
         )
       );
     }
@@ -26199,6 +26240,9 @@ var CartContainer = function (_Component) {
   }, {
     key: 'checkout',
     value: function checkout() {
+      this.setState({ cartClean: [] });
+      this.props.clearList();
+      window.localStorage.setItem("list", JSON.stringify([]));
       var total = this.findSum();
       fetch('/checkout', {
         method: "POST",
