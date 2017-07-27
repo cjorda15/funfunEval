@@ -29,6 +29,8 @@ body{
   background: #fff;
   border:3px solid #000;
   width: 80px;
+  display: flex;
+  flex-direction: column;
 }
 
 .cart-container{
@@ -82,4 +84,21 @@ body{
 
 .button-container button{
   width: 100%;
+}
+
+.menu-title{
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.order-history button ,.cart-container button{
+  height: 70px;
+  font-size: 40px;
+  background: azure;
+  border: none;
+  border-bottom: 2px solid;
+  outline: none;
 }
