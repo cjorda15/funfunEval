@@ -25990,6 +25990,7 @@ var Card = function Card(_ref) {
   return _react2.default.createElement(
     "div",
     { className: "card-container" },
+    _react2.default.createElement("img", { width: "50px", height: "50px", src: info.imgUrl }),
     _react2.default.createElement(
       "div",
       { className: "card-info" },
